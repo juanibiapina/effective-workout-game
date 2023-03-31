@@ -1,33 +1,27 @@
 import produce from 'immer';
 
-import { Game } from './types';
+export const startWorkout = produce((game) => {
+  if (game.currentWorkout) {
+    throw new Error('Workout already in progress');
+  }
 
-export const startWorkout = (game: Game): Game => {
-  return produce(game, (draft) => {
-    if (draft.currentWorkout) {
-      throw new Error('Workout already in progress');
-    }
+  game.currentWorkout = {
+    pending: game.deck,
+    performed: {},
+  };
+});
 
-    draft.currentWorkout = {
-      pending: draft.deck,
-      performed: {},
-    };
-  });
-};
+export const performCard = produce((game, cardId) => {
+  if (!game.currentWorkout) {
+    return;
+  }
 
-export const performCard = (game: Game, cardId: string): Game => {
-  return produce(game, (draft) => {
-    if (!draft.currentWorkout) {
-      return;
-    }
+  const card = game.currentWorkout.pending[cardId];
 
-    const card = draft.currentWorkout.pending[cardId];
+  if (!card) {
+    throw new Error(`Card ${cardId} not found in workout`);
+  }
 
-    if (!card) {
-      throw new Error(`Card ${cardId} not found in workout`);
-    }
-
-    delete draft.currentWorkout.pending[cardId];
-    draft.currentWorkout.performed[cardId] = card;
-  });
-};
+  delete game.currentWorkout.pending[cardId];
+  game.currentWorkout.performed[cardId] = card;
+});
