@@ -9,5 +9,5 @@ export const cards: Record<string, Card> = {
     name: 'Knee Push Up',
     description: 'A push up with your knees on the ground (1 repetition)',
     image: KneePushUpSVG,
-  }
+  },
 };
