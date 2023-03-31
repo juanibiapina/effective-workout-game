@@ -24,4 +24,9 @@ export const performCard = produce((game, cardId) => {
 
   delete game.currentWorkout.pending[cardId];
   game.currentWorkout.performed[cardId] = card;
+
+  // reset workout if all cards have been performed
+  if (Object.keys(game.currentWorkout.pending).length === 0) {
+    game.currentWorkout = null;
+  }
 });
