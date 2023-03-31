@@ -17,10 +17,9 @@ type Store = {
 const useStore = create<Store>((set) => ({
   game: createGame(startingDeck),
   actions: {
-    startWorkout: () =>
-      set((store) => ({ ...store, game: startWorkout(store.game) })),
+    startWorkout: () => set((store) => ({ game: startWorkout(store.game) })),
     performCard: (cardId) =>
-      set((store) => ({ ...store, game: performCard(store.game, cardId) })),
+      set((store) => ({ game: performCard(store.game, cardId) })),
   },
 }));
 
