@@ -16,19 +16,15 @@ export const startWorkout = (game: Game): Game => {
 };
 
 export const performCard = (game: Game, cardId: string): Game => {
-  if (!game.currentWorkout) {
-    throw new Error('No workout to perform card in');
-  }
-
-  const card = game.currentWorkout.pending[cardId];
-
-  if (!card) {
-    throw new Error(`Card ${cardId} not found in workout`);
-  }
-
   return produce(game, (draft) => {
     if (!draft.currentWorkout) {
       return;
+    }
+
+    const card = draft.currentWorkout.pending[cardId];
+
+    if (!card) {
+      throw new Error(`Card ${cardId} not found in workout`);
     }
 
     delete draft.currentWorkout.pending[cardId];
