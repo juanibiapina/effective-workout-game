@@ -16,9 +16,22 @@ const CurrentWorkout = () => {
 
   return (
     <div>
-      {Object.values(currentWorkout.pending).map((card) => (
-        <CardComponent key={card.id} card={card} />
-      ))}
+      <div>
+        <div>Pending</div>
+        <div>
+          {Object.values(currentWorkout.pending).map((card) => (
+            <CardComponent key={card.id} card={card} />
+          ))}
+        </div>
+      </div>
+      <div>
+        <div>Performed</div>
+        <div>
+          {Object.values(currentWorkout.performed).map((card) => (
+            <CardComponent key={card.id} card={card} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

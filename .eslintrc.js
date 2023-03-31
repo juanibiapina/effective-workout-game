@@ -19,4 +19,15 @@ module.exports = {
       version: 'detect',
     },
   },
+  rules: {
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        vars: 'all',
+        args: 'after-used',
+        ignoreRestSiblings: true,
+        argsIgnorePattern: '^_$', // ignore unused variable with name '_'
+      },
+    ],
+  },
 };
