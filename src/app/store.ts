@@ -1,6 +1,5 @@
 import { create } from 'zustand';
-import { Game } from '../game/types';
-import { createGame, startWorkout, performCard } from '../game/game';
+import { Game, createGame, startWorkout, performCard } from '../game';
 import basicPack from '../packs/basic';
 
 type Actions = {

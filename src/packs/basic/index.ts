@@ -1,4 +1,4 @@
-import { CardPack } from '../../game/types';
+import { CardPack } from '../../game';
 
 // card images
 import KneePushUpSVG from './images/knee-push-up.png';
