@@ -4,7 +4,7 @@ import { original } from 'immer';
 import { Game } from '../game/types';
 import { createGame } from '../game/game';
 import { startingDeck } from '../game/deck';
-import { createWorkout, performCard } from '../game/workout';
+import { startWorkout, performCard } from '../game/workout';
 
 type Actions = {
   startWorkout: () => void;
@@ -33,7 +33,7 @@ const useStore = create(
     actions: {
       startWorkout: () =>
         set((store) => {
-          store.game.currentWorkout = createWorkout(store.game.deck);
+          store.game = startWorkout(store.game);
         }),
 
       performCard: (cardId) =>

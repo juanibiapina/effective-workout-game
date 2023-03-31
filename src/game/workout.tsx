@@ -1,12 +1,18 @@
 import produce from 'immer';
 
-import { Game, Cards, Workout } from './types';
+import { Game } from './types';
 
-export const createWorkout = (pending: Cards): Workout => {
-  return {
-    pending,
-    performed: {},
-  };
+export const startWorkout = (game: Game): Game => {
+  return produce(game, (draft) => {
+    if (draft.currentWorkout) {
+      throw new Error('Workout already in progress');
+    }
+
+    draft.currentWorkout = {
+      pending: draft.deck,
+      performed: {},
+    };
+  });
 };
 
 export const performCard = (game: Game, cardId: string): Game => {
