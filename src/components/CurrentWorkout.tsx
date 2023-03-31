@@ -1,6 +1,6 @@
 import React from 'react';
-import useStore from "../app/store";
-import CardComponent from "./CardComponent";
+import useStore from '../app/store';
+import CardComponent from './CardComponent';
 
 const CurrentWorkout = () => {
   const currentWorkout = useStore((state) => state.game.currentWorkout);
@@ -16,7 +16,9 @@ const CurrentWorkout = () => {
 
   return (
     <div>
-      {Object.values(currentWorkout.pending).map(card => <CardComponent key={card.id} card={card} />)}
+      {Object.values(currentWorkout.pending).map((card) => (
+        <CardComponent key={card.id} card={card} />
+      ))}
     </div>
   );
 };

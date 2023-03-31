@@ -1,5 +1,4 @@
 import React from 'react';
-import useStore from "../app/store";
 import { Card } from '../game/types';
 
 import './CardComponent.css';

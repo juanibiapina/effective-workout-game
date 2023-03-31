@@ -1,5 +1,5 @@
 import React from 'react';
-import CurrentWorkout from "./CurrentWorkout";
+import CurrentWorkout from './CurrentWorkout';
 
 const Game = () => {
   return (
@@ -7,6 +7,6 @@ const Game = () => {
       <CurrentWorkout />
     </div>
   );
-}
+};
 
 export default Game;
