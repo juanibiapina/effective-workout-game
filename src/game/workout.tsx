@@ -1,4 +1,6 @@
-import { Cards, Workout } from './types';
+import produce from 'immer';
+
+import { Game, Cards, Workout } from './types';
 
 export const createWorkout = (pending: Cards): Workout => {
   return {
@@ -7,27 +9,23 @@ export const createWorkout = (pending: Cards): Workout => {
   };
 };
 
-export const performCard = (
-  workout: Workout | undefined,
-  cardId: string
-): Workout => {
-  if (!workout) {
+export const performCard = (game: Game, cardId: string): Game => {
+  if (!game.currentWorkout) {
     throw new Error('No workout to perform card in');
   }
 
-  const card = workout.pending[cardId];
+  const card = game.currentWorkout.pending[cardId];
 
   if (!card) {
     throw new Error(`Card ${cardId} not found in workout`);
   }
 
-  const { [cardId]: _, ...pending } = workout.pending;
+  return produce(game, (draft) => {
+    if (!draft.currentWorkout) {
+      return;
+    }
 
-  return {
-    pending,
-    performed: {
-      ...workout.performed,
-      [cardId]: card,
-    },
-  };
+    delete draft.currentWorkout.pending[cardId];
+    draft.currentWorkout.performed[cardId] = card;
+  });
 };

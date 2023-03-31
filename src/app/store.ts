@@ -38,10 +38,7 @@ const useStore = create(
 
       performCard: (cardId) =>
         set((store) => {
-          store.game.currentWorkout = performCard(
-            orig(store.game.currentWorkout),
-            cardId
-          );
+          store.game = performCard(orig(store.game), cardId);
         }),
     },
   }))
