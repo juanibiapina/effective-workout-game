@@ -1,8 +1,7 @@
 import { create } from 'zustand';
 import { Game } from '../game/types';
-import { createGame } from '../game/game';
+import { createGame, startWorkout, performCard } from '../game/game';
 import { startingDeck } from '../game/deck';
-import { startWorkout, performCard } from '../game/workout';
 
 type Actions = {
   startWorkout: () => void;
