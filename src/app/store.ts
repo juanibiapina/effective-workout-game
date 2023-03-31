@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { Game } from '../game/types';
 import { createGame, startWorkout, performCard } from '../game/game';
-import { startingDeck } from '../game/cards';
+import basicPack from '../packs/basic';
 
 type Actions = {
   startWorkout: () => void;
@@ -14,7 +14,7 @@ type Store = {
 };
 
 const useStore = create<Store>((set) => ({
-  game: createGame(startingDeck),
+  game: createGame(basicPack),
   actions: {
     startWorkout: () => set((store) => ({ game: startWorkout(store.game) })),
     performCard: (cardId) =>

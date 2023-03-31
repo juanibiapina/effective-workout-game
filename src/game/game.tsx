@@ -1,10 +1,15 @@
 import produce from 'immer';
 
-import { Deck, Game } from './types';
+import { Deck, Game, CardPack } from './types';
 
-export const createGame = (deck: Deck): Game => {
+export const createGame = (cardPack: CardPack): Game => {
   return {
-    deck,
+    cardPack,
+    deck: cardPack.startingDeck.reduce((deck, cardId) => {
+      deck[cardId] = cardPack.cards[cardId];
+      return deck;
+    }, {} as Deck),
+    currentWorkout: undefined,
   };
 };
 
