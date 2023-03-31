@@ -1,10 +1,10 @@
 import React from 'react';
-import CurrentWorkout from './CurrentWorkout';
+import Workout from './Workout';
 
 const Game = () => {
   return (
     <div>
-      <CurrentWorkout />
+      <Workout />
     </div>
   );
 };
