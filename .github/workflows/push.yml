@@ -3,7 +3,7 @@ name: Push Workflow
 on: push
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,5 +24,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run linter
+      - name: Lint
         run: npm run lint
+
+      - name: Check types
+        run: npm run typecheck
