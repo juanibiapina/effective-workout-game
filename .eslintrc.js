@@ -29,5 +29,11 @@ module.exports = {
         argsIgnorePattern: '^_$', // ignore unused variable with name '_'
       },
     ],
+    '@typescript-eslint/no-explicit-any': [
+      'error',
+      {
+        ignoreRestArgs: true,
+      },
+    ],
   },
 };

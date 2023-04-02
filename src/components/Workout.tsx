@@ -10,7 +10,7 @@ const Workout = () => {
   if (!currentWorkout) {
     return (
       <div>
-        <button onClick={startWorkout}>Start Workout</button>
+        <button onClick={() => startWorkout()}>Start Workout</button>
       </div>
     );
   }

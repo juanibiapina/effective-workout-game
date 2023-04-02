@@ -39,7 +39,7 @@ export const createGame = (cardPack: CardPack): Game => {
   };
 };
 
-export const startWorkout = produce((game) => {
+export const startWorkout = produce((game: Game) => {
   if (game.currentWorkout) {
     throw new Error('Workout already in progress');
   }
@@ -50,7 +50,7 @@ export const startWorkout = produce((game) => {
   };
 });
 
-export const performCard = produce((game, cardId) => {
+export const performCard = produce((game: Game, cardId: string) => {
   if (!game.currentWorkout) {
     return;
   }
@@ -66,6 +66,6 @@ export const performCard = produce((game, cardId) => {
 
   // reset workout if all cards have been performed
   if (Object.keys(game.currentWorkout.pending).length === 0) {
-    game.currentWorkout = null;
+    game.currentWorkout = undefined;
   }
 });

@@ -1,24 +1,55 @@
-import { create } from 'zustand';
+import { create, SetState } from 'zustand';
 import { Game, createGame, startWorkout, performCard } from '../game';
 import basicPack from '../packs/basic';
+import { L } from 'ts-toolbelt';
 
-type Actions = {
-  startWorkout: () => void;
-  performCard: (cardId: string) => void;
+type GameAction = (game: Game, ...args: any[]) => Game;
+
+type StoreAction<F extends GameAction> = (
+  ...args: L.Tail<Parameters<F>>
+) => void;
+
+type StoreActions = {
+  startWorkout: StoreAction<typeof startWorkout>;
+  performCard: StoreAction<typeof performCard>;
+};
+
+type GameActionsMap = {
+  [K in keyof StoreActions]: StoreActions[K] extends StoreAction<infer F>
+    ? F
+    : never;
 };
 
 type Store = {
-  game: Game;
-  actions: Actions;
+  readonly game: Game;
+  readonly actions: StoreActions;
 };
+
+function createStoreAction<F extends GameAction>(
+  set: SetState<Store>,
+  func: F
+): StoreAction<F> {
+  return (...args) => {
+    set((store: Store) => ({ game: func(store.game, ...args) }));
+  };
+}
+
+function createActions(
+  set: SetState<Store>,
+  actionsMap: GameActionsMap
+): StoreActions {
+  return Object.entries(actionsMap).reduce(
+    (actions, [key, func]) => ({
+      ...actions,
+      [key]: createStoreAction(set, func),
+    }),
+    {} as StoreActions
+  );
+}
 
 const useStore = create<Store>((set) => ({
   game: createGame(basicPack),
-  actions: {
-    startWorkout: () => set((store) => ({ game: startWorkout(store.game) })),
-    performCard: (cardId) =>
-      set((store) => ({ game: performCard(store.game, cardId) })),
-  },
+  actions: createActions(set, { startWorkout, performCard }),
 }));
 
 export default useStore;
