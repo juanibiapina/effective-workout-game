@@ -7,11 +7,8 @@ import {
   performCard,
 } from '../game';
 import basicPack from '../packs/basic';
-import { L } from 'ts-toolbelt';
 
-type StoreAction<F extends GameAction> = (
-  ...args: L.Tail<Parameters<F>>
-) => void;
+type StoreAction<F extends GameAction> = (...args: Parameters<F>) => void;
 
 type StoreActions = {
   startWorkout: StoreAction<typeof startWorkout>;
