@@ -8,6 +8,7 @@ export type Card = {
   name: string;
   description: string;
   image: string;
+  effects: Array<Effect>;
 };
 
 export type Cards = Record<string, Card>;
@@ -54,6 +55,12 @@ export const startWorkout = () =>
     };
   });
 
+export const upgradeCard = (cardId: string, newCardId: string) =>
+  produce((game: Game) => {
+    game.deck[newCardId] = game.cardPack.cards[newCardId];
+    delete game.deck[cardId];
+  });
+
 export const performCard = (cardId: string) => (game: Game) => {
   if (!game.currentWorkout) {
     throw new Error('No workout in progress');
@@ -78,5 +85,5 @@ export const performCard = (cardId: string) => (game: Game) => {
     }
   });
 
-  return newGame;
+  return card.effects.reduce((game, effect) => effect(game), newGame);
 };
