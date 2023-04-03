@@ -42,14 +42,14 @@ export const createGame = (cardPack: CardPack): Game => {
   };
 };
 
-export const startWorkout = () => (game: Game) =>
-  produce(game, (draft) => {
-    if (draft.currentWorkout) {
+export const startWorkout = () =>
+  produce((game: Game) => {
+    if (game.currentWorkout) {
       throw new Error('Workout already in progress');
     }
 
-    draft.currentWorkout = {
-      pending: draft.deck,
+    game.currentWorkout = {
+      pending: game.deck,
       performed: {},
     };
   });
