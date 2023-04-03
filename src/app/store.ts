@@ -1,9 +1,13 @@
 import { create, SetState } from 'zustand';
-import { Game, createGame, startWorkout, performCard } from '../game';
+import {
+  Game,
+  Action as GameAction,
+  createGame,
+  startWorkout,
+  performCard,
+} from '../game';
 import basicPack from '../packs/basic';
 import { L } from 'ts-toolbelt';
-
-type GameAction = (game: Game, ...args: any[]) => Game;
 
 type StoreAction<F extends GameAction> = (
   ...args: L.Tail<Parameters<F>>
@@ -30,7 +34,7 @@ function createStoreAction<F extends GameAction>(
   func: F
 ): StoreAction<F> {
   return (...args) => {
-    set((store: Store) => ({ game: func(store.game, ...args) }));
+    set((store: Store) => ({ game: func(...args)(store.game) }));
   };
 }
 
