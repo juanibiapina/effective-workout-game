@@ -6,12 +6,16 @@ import './CardComponent.css';
 
 const CardComponent: React.FC<{
   cardId: string;
-  onClick?: (id: string) => void;
-}> = ({ cardId, onClick }) => {
+  performable: boolean;
+}> = ({ cardId, performable }) => {
+  const performCard = useStore((store) => store.actions.performCard);
   const card = useStore((state) => state.game.cardPack.cards[cardId]);
 
   return (
-    <div className="card" onClick={() => onClick?.(cardId)}>
+    <div
+      className="card"
+      onClick={() => (performable ? performCard(cardId) : undefined)}
+    >
       <div className="title">{card.name}</div>
       <div className="illustration">
         <img src={card.image} alt={card.name} />

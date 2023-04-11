@@ -5,7 +5,6 @@ import CardComponent from './CardComponent';
 const Workout = () => {
   const currentWorkout = useStore((state) => state.game.currentWorkout);
   const startWorkout = useStore((state) => state.actions.startWorkout);
-  const performCard = useStore((store) => store.actions.performCard);
 
   if (!currentWorkout) {
     return (
@@ -21,7 +20,7 @@ const Workout = () => {
         <div>Pending</div>
         <div>
           {Object.values(currentWorkout.pending).map((cardId) => (
-            <CardComponent key={cardId} cardId={cardId} onClick={performCard} />
+            <CardComponent key={cardId} cardId={cardId} performable={true} />
           ))}
         </div>
       </div>
@@ -29,7 +28,7 @@ const Workout = () => {
         <div>Performed</div>
         <div>
           {Object.values(currentWorkout.performed).map((cardId) => (
-            <CardComponent key={cardId} cardId={cardId} />
+            <CardComponent key={cardId} cardId={cardId} performable={false} />
           ))}
         </div>
       </div>
