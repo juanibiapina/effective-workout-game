@@ -11,13 +11,13 @@ export type Card = {
   effects: Array<Effect>;
 };
 
-export type Cards = Record<string, Card>;
+export type Cards = string[];
 
 export type Deck = Cards;
 
 export type CardPack = {
   name: string;
-  cards: Cards;
+  cards: Record<string, Card>;
   startingDeck: Array<string>;
 };
 
@@ -36,9 +36,9 @@ export const createGame = (cardPack: CardPack): Game => {
   return {
     cardPack,
     deck: cardPack.startingDeck.reduce((deck, cardId) => {
-      deck[cardId] = cardPack.cards[cardId];
+      deck.push(cardId);
       return deck;
-    }, {} as Deck),
+    }, [] as Deck),
     currentWorkout: undefined,
   };
 };
@@ -51,14 +51,17 @@ export const startWorkout = () =>
 
     game.currentWorkout = {
       pending: game.deck,
-      performed: {},
+      performed: [],
     };
   });
 
 export const upgradeCard = (cardId: string, newCardId: string) =>
   produce((game: Game) => {
-    game.deck[newCardId] = game.cardPack.cards[newCardId];
-    delete game.deck[cardId];
+    // add new card to deck
+    game.deck.push(newCardId);
+
+    // remove cardId from deck
+    game.deck = game.deck.filter((id) => id !== cardId);
   });
 
 export const performCard = (cardId: string) => (game: Game) => {
@@ -66,9 +69,10 @@ export const performCard = (cardId: string) => (game: Game) => {
     throw new Error('No workout in progress');
   }
 
-  const card = game.currentWorkout.pending[cardId];
+  // find card
+  const card = game.cardPack.cards[cardId];
   if (!card) {
-    throw new Error(`Card ${cardId} not found in workout`);
+    throw new Error(`Card ${cardId} doesn't exist in card pack`);
   }
 
   const newGame = produce(game, (draft) => {
@@ -76,11 +80,16 @@ export const performCard = (cardId: string) => (game: Game) => {
       throw new Error('No workout in progress');
     }
 
-    delete draft.currentWorkout.pending[cardId];
-    draft.currentWorkout.performed[cardId] = card;
+    // remove card from pending array
+    draft.currentWorkout.pending = draft.currentWorkout.pending.filter(
+      (id) => id !== cardId
+    );
+
+    // add card to performed array
+    draft.currentWorkout.performed.push(cardId);
 
     // reset workout if all cards have been performed
-    if (Object.keys(draft.currentWorkout.pending).length === 0) {
+    if (draft.currentWorkout.pending.length === 0) {
       draft.currentWorkout = undefined;
     }
   });

@@ -20,16 +20,16 @@ const Workout = () => {
       <div>
         <div>Pending</div>
         <div>
-          {Object.values(currentWorkout.pending).map((card) => (
-            <CardComponent key={card.id} card={card} onClick={performCard} />
+          {Object.values(currentWorkout.pending).map((cardId) => (
+            <CardComponent key={cardId} cardId={cardId} onClick={performCard} />
           ))}
         </div>
       </div>
       <div>
         <div>Performed</div>
         <div>
-          {Object.values(currentWorkout.performed).map((card) => (
-            <CardComponent key={card.id} card={card} />
+          {Object.values(currentWorkout.performed).map((cardId) => (
+            <CardComponent key={cardId} cardId={cardId} />
           ))}
         </div>
       </div>
