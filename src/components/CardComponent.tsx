@@ -11,11 +11,14 @@ const CardComponent: React.FC<{
   const performCard = useStore((store) => store.actions.performCard);
   const card = useStore((state) => state.game.cardPack.cards[cardId]);
 
+  const onClick = () => {
+    if (performable) {
+      performCard(cardId);
+    }
+  };
+
   return (
-    <div
-      className="card"
-      onClick={() => (performable ? performCard(cardId) : undefined)}
-    >
+    <div className="card" onClick={onClick}>
       <div className="title">{card.name}</div>
       <div className="illustration">
         <img src={card.image} alt={card.name} />
