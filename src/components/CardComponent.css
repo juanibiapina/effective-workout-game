@@ -10,6 +10,7 @@
   text-align: left;
   transition: transform 0.3s;
   overflow: hidden;
+  position: relative;
 }
 
 .card:hover {
@@ -51,4 +52,39 @@
   text-align: center;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
+}
+
+.card .performing-actions {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.card .performing-actions button,
+.card .performing-actions input {
+  margin: 0 8px;
+}
+
+.card .performing-actions input {
+  width: 50px;
+  text-align: center;
+}
+
+.card .performing-actions .cancel-button {
+  background-color: #f44336; /* Red color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.card .performing-actions .cancel-button:hover {
+  background-color: #d32f2f; /* Darker red color */
 }
