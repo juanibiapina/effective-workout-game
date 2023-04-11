@@ -75,6 +75,7 @@ export const performCard = (cardId: string) => (game: Game) => {
     throw new Error(`Card ${cardId} doesn't exist in card pack`);
   }
 
+  // move card from pending to performed
   const newGame = produce(game, (draft) => {
     if (!draft.currentWorkout) {
       throw new Error('No workout in progress');
@@ -94,5 +95,6 @@ export const performCard = (cardId: string) => (game: Game) => {
     }
   });
 
+  // apply card effects
   return card.effects.reduce((game, effect) => effect(game), newGame);
 };
