@@ -1,4 +1,4 @@
-import produce from 'immer';
+import { produce } from 'immer';
 
 export type Effect = (game: Game) => Game;
 export type Action = (...args: any[]) => Effect;
