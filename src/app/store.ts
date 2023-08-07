@@ -1,4 +1,4 @@
-import { create, SetState } from 'zustand';
+import { create, StoreApi } from 'zustand';
 import {
   Game,
   Action as GameAction,
@@ -27,7 +27,7 @@ type Store = {
 };
 
 function createStoreAction<F extends GameAction>(
-  set: SetState<Store>,
+  set: StoreApi<Store>['setState'],
   func: F
 ): StoreAction<F> {
   return (...args) => {
@@ -36,7 +36,7 @@ function createStoreAction<F extends GameAction>(
 }
 
 function createActions(
-  set: SetState<Store>,
+  set: StoreApi<Store>['setState'],
   actionsMap: GameActionsMap
 ): StoreActions {
   return Object.entries(actionsMap).reduce(
@@ -48,7 +48,7 @@ function createActions(
   );
 }
 
-const useStore = create<Store>((set) => ({
+const useStore = create<Store>()((set) => ({
   game: createGame(basicPack),
   actions: createActions(set, { startWorkout, performCard }),
 }));
