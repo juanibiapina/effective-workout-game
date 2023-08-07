@@ -48,7 +48,7 @@ function createActions(
   );
 }
 
-const useStore = create<Store>((set) => ({
+const useStore = create<Store>()((set) => ({
   game: createGame(basicPack),
   actions: createActions(set, { startWorkout, performCard }),
 }));
