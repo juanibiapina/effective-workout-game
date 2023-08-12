@@ -1,16 +1,12 @@
+// internal dependencies
 import useStore from '../app/store';
 import CardComponent from './CardComponent';
 
 const Workout = () => {
   const currentWorkout = useStore((state) => state.game.currentWorkout);
-  const startWorkout = useStore((state) => state.actions.startWorkout);
 
   if (!currentWorkout) {
-    return (
-      <div>
-        <button onClick={() => startWorkout()}>Start Workout</button>
-      </div>
-    );
+    return null;
   }
 
   return (
