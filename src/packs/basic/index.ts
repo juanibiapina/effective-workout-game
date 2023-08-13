@@ -6,23 +6,22 @@ import KneePushUpSVG from './images/knee-push-up.png';
 const basicPack: CardPack = {
   name: 'Basic Workout',
   cards: {
+    'wall-push-up': {
+      id: 'wall-push-up',
+      name: 'Wall Push Up',
+      description: 'A push up with your hands on a wall',
+      image: KneePushUpSVG,
+      effects: [upgradeCard('wall-push-up', 'knee-push-up')],
+    },
     'knee-push-up': {
       id: 'knee-push-up',
       name: 'Knee Push Up',
-      description: 'A push up with your knees on the ground (1 repetition)',
-      image: KneePushUpSVG,
-      effects: [upgradeCard('knee-push-up', 'knee-push-up-10')],
-    },
-    'knee-push-up-10': {
-      id: 'knee-push-up-10',
-      name: 'Knee Push Up',
-      description:
-        'A push up with your knees on the ground (up to 10 repetitions)',
+      description: 'A push up with your knees on the ground',
       image: KneePushUpSVG,
       effects: [],
     },
   },
-  startingDeck: ['knee-push-up'],
+  startingDeck: ['wall-push-up'],
 };
 
 export default basicPack;
