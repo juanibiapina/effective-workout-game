@@ -1,14 +1,24 @@
 import { produce } from 'immer';
 
+export type Set = {
+  repetitions: number;
+};
+
+export type Exercise = {
+  cardId: string;
+  sets: Set[];
+};
+
 export type Effect = (game: Game) => Game;
 export type Action = (...args: any[]) => Effect;
+export type CardAction = (exercise: Exercise) => Effect;
 
 export type Card = {
   id: string;
   name: string;
   description: string;
   image: string;
-  effects: Array<Effect>;
+  actions: Array<CardAction>;
 };
 
 export type Cards = string[];
@@ -64,15 +74,15 @@ export const upgradeCard = (cardId: string, newCardId: string) =>
     game.deck = game.deck.filter((id) => id !== cardId);
   });
 
-export const performCard = (cardId: string) => (game: Game) => {
+export const performExercise = (exercise: Exercise) => (game: Game) => {
   if (!game.currentWorkout) {
     throw new Error('No workout in progress');
   }
 
   // find card
-  const card = game.cardPack.cards[cardId];
+  const card = game.cardPack.cards[exercise.cardId];
   if (!card) {
-    throw new Error(`Card ${cardId} doesn't exist in card pack`);
+    throw new Error(`Card ${exercise.cardId} doesn't exist in card pack`);
   }
 
   // move card from pending to performed
@@ -83,11 +93,11 @@ export const performCard = (cardId: string) => (game: Game) => {
 
     // remove card from pending array
     draft.currentWorkout.pending = draft.currentWorkout.pending.filter(
-      (id) => id !== cardId
+      (id) => id !== exercise.cardId
     );
 
     // add card to performed array
-    draft.currentWorkout.performed.push(cardId);
+    draft.currentWorkout.performed.push(exercise.cardId);
 
     // reset workout if all cards have been performed
     if (draft.currentWorkout.pending.length === 0) {
@@ -96,5 +106,5 @@ export const performCard = (cardId: string) => (game: Game) => {
   });
 
   // apply card effects
-  return card.effects.reduce((game, effect) => effect(game), newGame);
+  return card.actions.reduce((game, action) => action(exercise)(game), newGame);
 };

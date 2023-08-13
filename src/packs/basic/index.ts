@@ -1,7 +1,9 @@
-import { CardPack, upgradeCard } from '../../game';
+import { Game, CardPack, upgradeCard } from '../../game';
 
 // card images
 import KneePushUpSVG from './images/knee-push-up.png';
+
+const noop = (game: Game) => game;
 
 const basicPack: CardPack = {
   name: 'Basic Workout',
@@ -11,14 +13,20 @@ const basicPack: CardPack = {
       name: 'Wall Push Up',
       description: 'A push up with your hands on a wall',
       image: KneePushUpSVG,
-      effects: [upgradeCard('wall-push-up', 'knee-push-up')],
+      actions: [(exercise) => {
+        if (exercise.sets[0].repetitions >= 10) {
+          return upgradeCard('wall-push-up', 'knee-push-up');
+        } else {
+          return noop
+        }
+      }],
     },
     'knee-push-up': {
       id: 'knee-push-up',
       name: 'Knee Push Up',
       description: 'A push up with your knees on the ground',
       image: KneePushUpSVG,
-      effects: [],
+      actions: [],
     },
   },
   startingDeck: ['wall-push-up'],

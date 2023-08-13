@@ -8,7 +8,7 @@ const CardComponent: React.FC<{
   cardId: string;
   performable: boolean;
 }> = ({ cardId, performable }) => {
-  const performCard = useStore((state) => state.actions.performCard);
+  const performExercise = useStore((state) => state.actions.performExercise);
   const card = useStore((state) => state.game.cardPack.cards[cardId]);
 
   const [performing, setPerforming] = React.useState(false);
@@ -21,7 +21,14 @@ const CardComponent: React.FC<{
   };
 
   const submit = () => {
-    performCard(cardId); // TODO: pass repetitions
+    performExercise({
+      cardId,
+      sets: [
+        {
+          repetitions,
+        },
+      ],
+    });
   };
 
   const cancel = () => {

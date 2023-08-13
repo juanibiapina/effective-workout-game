@@ -4,7 +4,7 @@ import {
   Action as GameAction,
   createGame,
   startWorkout,
-  performCard,
+  performExercise,
 } from '../game';
 import basicPack from '../packs/basic';
 
@@ -12,7 +12,7 @@ type StoreAction<F extends GameAction> = (...args: Parameters<F>) => void;
 
 type StoreActions = {
   startWorkout: StoreAction<typeof startWorkout>;
-  performCard: StoreAction<typeof performCard>;
+  performExercise: StoreAction<typeof performExercise>;
 };
 
 type GameActionsMap = {
@@ -50,7 +50,7 @@ function createActions(
 
 const useStore = create<Store>()((set) => ({
   game: createGame(basicPack),
-  actions: createActions(set, { startWorkout, performCard }),
+  actions: createActions(set, { startWorkout, performExercise }),
 }));
 
 export default useStore;
