@@ -39,13 +39,14 @@ export type CardPack = {
 
 export type Workout = {
   pending: Cards;
-  performed: Cards;
+  exercises: Exercise[];
 };
 
 export type Game = {
   cardPack: CardPack;
   deck: Deck;
   currentWorkout?: Workout;
+  workoutHistory: Workout[];
 };
 
 export const createGame = (cardPack: CardPack): Game => {
@@ -56,6 +57,7 @@ export const createGame = (cardPack: CardPack): Game => {
       return deck;
     }, [] as Deck),
     currentWorkout: undefined,
+    workoutHistory: [],
   };
 };
 
@@ -67,7 +69,7 @@ export const startWorkout = () =>
 
     game.currentWorkout = {
       pending: game.deck,
-      performed: [],
+      exercises: [],
     };
   });
 
@@ -103,7 +105,7 @@ export const performExercise = (exercise: Exercise) => (game: Game) => {
     throw new Error(`Card ${exercise.cardId} doesn't exist in card pack`);
   }
 
-  // move card from pending to performed
+  // remove card from pending and add exercise to performed
   const newGame = produce(game, (draft) => {
     if (!draft.currentWorkout) {
       throw new Error('No workout in progress');
@@ -114,11 +116,12 @@ export const performExercise = (exercise: Exercise) => (game: Game) => {
       (id) => id !== exercise.cardId
     );
 
-    // add card to performed array
-    draft.currentWorkout.performed.push(exercise.cardId);
+    // add exercise to exercises array
+    draft.currentWorkout.exercises.push(exercise);
 
-    // reset workout if all cards have been performed
+    // if all cards have been performed, save workout to history and clear current workout
     if (draft.currentWorkout.pending.length === 0) {
+      draft.workoutHistory.push(draft.currentWorkout);
       draft.currentWorkout = undefined;
     }
   });

@@ -22,8 +22,8 @@ const Workout = () => {
       <div>
         <div>Performed</div>
         <div>
-          {Object.values(currentWorkout.performed).map((cardId) => (
-            <CardComponent key={cardId} cardId={cardId} performable={false} />
+          {Object.values(currentWorkout.exercises).map((exercise) => (
+            <CardComponent key={exercise.cardId} cardId={exercise.cardId} performable={false} />
           ))}
         </div>
       </div>
