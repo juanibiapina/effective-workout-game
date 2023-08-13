@@ -1,4 +1,8 @@
+// external dependencies
 import { create, StoreApi } from 'zustand';
+import { persist } from 'zustand/middleware';
+
+// internal dependencies
 import {
   Game,
   Action as GameAction,
@@ -48,9 +52,12 @@ function createActions(
   );
 }
 
-const useStore = create<Store>()((set) => ({
+const useStore = create<Store>()(persist((set) => ({
   game: createGame(basicPack),
   actions: createActions(set, { startWorkout, performExercise }),
+}), {
+  name: 'effective-workout-state',
+  partialize: (state) => ({ game: state.game }),
 }));
 
 export default useStore;
