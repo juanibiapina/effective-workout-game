@@ -1,9 +1,10 @@
-import Game from './components/Game';
+// external dependencies
+import { Outlet } from 'react-router-dom';
 
 const App = () => {
   return (
     <div>
-      <Game />
+      <Outlet />
     </div>
   );
 };
