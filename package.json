@@ -5,7 +5,8 @@
   "source": "src/index.html",
   "scripts": {
     "start": "parcel",
-    "build": "parcel build --dist-dir docs",
+    "build-local": "parcel build",
+    "build": "parcel build --dist-dir docs --public-url https://juanibiapina.github.io/effective-workout-game",
     "typecheck": "tsc --noEmit --strict"
   },
   "dependencies": {
