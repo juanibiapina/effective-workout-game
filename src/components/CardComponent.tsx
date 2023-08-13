@@ -23,11 +23,7 @@ const CardComponent: React.FC<{
   const submit = () => {
     performExercise({
       cardId,
-      sets: [
-        {
-          repetitions,
-        },
-      ],
+      repetitions,
     });
   };
 
@@ -36,7 +32,7 @@ const CardComponent: React.FC<{
   };
 
   const increaseValue = () => {
-    setRepetitions((prevValue) => Math.min(prevValue + 1, 10));
+    setRepetitions((prevValue) => prevValue + 1);
   };
 
   const decreaseValue = () => {
@@ -45,7 +41,7 @@ const CardComponent: React.FC<{
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(event.target.value);
-    if (newValue >= 0 && newValue <= 10) {
+    if (newValue >= 0) {
       setRepetitions(newValue);
     }
   };

@@ -1,24 +1,30 @@
 import { produce } from 'immer';
 
-export type Set = {
-  repetitions: number;
-};
-
 export type Exercise = {
   cardId: string;
-  sets: Set[];
+  repetitions: number;
 };
 
 export type Effect = (game: Game) => Game;
 export type Action = (...args: any[]) => Effect;
-export type CardAction = (exercise: Exercise) => Effect;
+
+export type Goal = {
+  repetitions: number;
+};
+
+export type UpgradeCardReward = {
+  cardId: string;
+};
+
+export type Reward = UpgradeCardReward;
 
 export type Card = {
   id: string;
   name: string;
   description: string;
   image: string;
-  actions: Array<CardAction>;
+  goal: Goal;
+  reward?: Reward;
 };
 
 export type Cards = string[];
@@ -74,6 +80,18 @@ export const upgradeCard = (cardId: string, newCardId: string) =>
     game.deck = game.deck.filter((id) => id !== cardId);
   });
 
+const goalReached = (card: Card, exercise: Exercise) => {
+  return exercise.repetitions >= card.goal.repetitions;
+};
+
+const applyReward = (card: Card, game: Game) => {
+  if (!card.reward) {
+    return game;
+  }
+
+  return upgradeCard(card.id, card.reward.cardId)(game);
+};
+
 export const performExercise = (exercise: Exercise) => (game: Game) => {
   if (!game.currentWorkout) {
     throw new Error('No workout in progress');
@@ -105,6 +123,10 @@ export const performExercise = (exercise: Exercise) => (game: Game) => {
     }
   });
 
-  // apply card effects
-  return card.actions.reduce((game, action) => action(exercise)(game), newGame);
+  // check if goal has been reached
+  if (goalReached(card, exercise)) {
+    return applyReward(card, newGame);
+  } else {
+    return newGame;
+  }
 };
