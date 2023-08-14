@@ -9,7 +9,8 @@ import {
 // internal dependencies
 import './index.css';
 import App from './App';
-import Game from './components/Game';
+import StartWorkoutRoute from './routes/StartWorkoutRoute';
+import CurrentWorkoutRoute from './routes/CurrentWorkoutRoute';
 
 // stylesheets
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,8 +25,12 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "/",
-        element: <Game />,
+        path: "/startWorkout",
+        element: <StartWorkoutRoute />,
+      },
+      {
+        path: "/currentWorkout",
+        element: <CurrentWorkoutRoute />,
       },
     ],
   },

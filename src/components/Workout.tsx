@@ -6,7 +6,11 @@ const Workout = () => {
   const currentWorkout = useStore((state) => state.game.currentWorkout);
 
   if (!currentWorkout) {
-    return null;
+    return (
+      <div>
+        <div>No current workout</div>
+      </div>
+    );
   }
 
   return (
