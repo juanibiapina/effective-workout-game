@@ -11,6 +11,9 @@ import './index.css';
 import App from './App';
 import Game from './components/Game';
 
+// determine basename according to environment
+const basename = process.env.ENVIRONMENT === 'production' ? '/effective-workout-game' : '/';
+
 // configure router
 const router = createBrowserRouter([
   {
@@ -23,7 +26,9 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+], {
+  basename,
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

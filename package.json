@@ -5,8 +5,8 @@
   "source": "src/index.html",
   "scripts": {
     "start": "parcel",
-    "build-local": "parcel build",
-    "build": "parcel build --public-url https://juanibiapina.github.io/effective-workout-game",
+    "build-local": "ENVIRONMENT=development parcel build",
+    "build": "ENVIRONMENT=production parcel build --public-url https://juanibiapina.github.io/effective-workout-game",
     "typecheck": "tsc --noEmit --strict"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
+    "@types/node": "^20.5.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "parcel": "^2.9.3",
