@@ -11,6 +11,9 @@ import './index.css';
 import App from './App';
 import Game from './components/Game';
 
+// stylesheets
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 // determine basename according to environment
 const basename = process.env.ENVIRONMENT === 'production' ? '/effective-workout-game' : '/';
 
