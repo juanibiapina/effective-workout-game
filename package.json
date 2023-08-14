@@ -4,9 +4,8 @@
   "private": true,
   "source": "src/index.html",
   "scripts": {
-    "start": "parcel",
-    "build-local": "ENVIRONMENT=development parcel build",
-    "build": "ENVIRONMENT=production parcel build --public-url https://juanibiapina.github.io/effective-workout-game",
+    "build": "webpack --config webpack/production.js",
+    "start": "webpack serve --config webpack/development.js",
     "typecheck": "tsc --noEmit --strict"
   },
   "dependencies": {
@@ -20,12 +19,20 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
+    "@swc/core": "^1.3.76",
     "@types/node": "^20.5.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
-    "parcel": "^2.9.3",
-    "process": "^0.11.10",
-    "typescript": "^5.1.6"
+    "css-loader": "^6.8.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.3",
+    "style-loader": "^3.3.3",
+    "swc-loader": "^0.2.3",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1",
+    "webpack-merge": "^5.9.0"
   },
   "browserslist": "> 0.5%, last 2 versions, not dead"
 }

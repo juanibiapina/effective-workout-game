@@ -3,6 +3,3 @@
 
 # build files
 /dist
-
-# parcel cache
-.parcel-cache
