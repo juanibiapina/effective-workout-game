@@ -15,9 +15,6 @@ import CurrentWorkoutRoute from './routes/CurrentWorkoutRoute';
 // stylesheets
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// determine basename according to environment
-const basename = process.env.ENVIRONMENT === 'production' ? '/effective-workout-game' : '/';
-
 // configure router
 const router = createBrowserRouter([
   {
@@ -35,7 +32,7 @@ const router = createBrowserRouter([
     ],
   },
 ], {
-  basename,
+  basename: document.querySelector('base')?.getAttribute('href') || undefined,
 });
 
 const root = ReactDOM.createRoot(
