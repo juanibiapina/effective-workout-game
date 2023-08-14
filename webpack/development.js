@@ -18,5 +18,6 @@ module.exports = merge(common, {
   ],
   devServer: {
     static: './dist',
+    historyApiFallback: true, // serve index.html for all routes
   },
 });
