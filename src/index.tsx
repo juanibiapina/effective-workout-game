@@ -7,13 +7,15 @@ import {
 } from "react-router-dom";
 
 // internal dependencies
-import './index.css';
 import App from './App';
 import StartWorkoutRoute from './routes/StartWorkoutRoute';
 import CurrentWorkoutRoute from './routes/CurrentWorkoutRoute';
 
 // stylesheets
-import 'bootstrap/dist/css/bootstrap.min.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 // configure router
 const router = createBrowserRouter([
